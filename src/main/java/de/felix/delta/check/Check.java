@@ -5,6 +5,7 @@ import de.felix.delta.data.DataHolder;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerEvent;
 
 @Getter
 public abstract class Check {
@@ -31,6 +32,6 @@ public abstract class Check {
         this.alertBuilder = new AlertBuilder(this);
     }
 
-    protected abstract void handle(Packet<?> packet);
+    public abstract void handle(PlayerEvent packet);
 
 }

@@ -3,6 +3,7 @@ package de.felix.delta;
 import cc.funkemunky.api.Atlas;
 import cc.funkemunky.api.utils.Color;
 import cc.funkemunky.api.utils.MiscUtils;
+import de.felix.delta.check.CheckManager;
 import de.felix.delta.command.DeltaCommand;
 import de.felix.delta.data.DataManager;
 import de.felix.delta.listener.DataListener;
@@ -15,12 +16,11 @@ public class DeltaPlugin {
 
     public static DeltaPlugin instance;
     public final String antiCheat_name = "Delta";
-
     public DeltaCommand deltaCommand;
-
     public DataManager dataManager;
-
     public DataListener dataListener;
+
+    public CheckManager checkManager;
 
     public static DeltaPlugin getInstance() {
         if (instance == null) {
@@ -38,7 +38,6 @@ public class DeltaPlugin {
         delta.getServer().getPluginManager().registerEvents(new DataListener(), delta);
         delta.getServer().getPluginManager().registerEvents(new ConnectionListener(), delta);
         this.dataListener = new DataListener();
-        MiscUtils.printToConsole(Color.Gray + "(" + Color.Pink + Color.Strikethrough + "DataManagerAutism DeltaP" + Color.Gray + ") " + Color.Green + "Initialized DataManager! " + dataManager);
     }
 
     public void disable(Delta delta) {
