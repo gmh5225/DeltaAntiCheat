@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DeltaAntiCheat">
+    <output-path>$USER_HOME$/Documents/AtomServer/plugins</output-path>
+    <root id="archive" name="DeltaAntiCheat.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+      <element id="module-output" name="DeltaAntiCheat" />
+    </root>
+  </artifact>
+</component>

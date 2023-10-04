@@ -1,0 +1,10 @@
+name: Delta
+main: de.felix.delta.Delta
+version: 1.0.0
+api-version: 1.8
+author: YourName
+description: A simple AntiCheat plugin.
+commands:
+  Delta:
+    description: Main command for Delta
+    usage: /<command> [subcommand]

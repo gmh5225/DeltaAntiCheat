@@ -1,0 +1,39 @@
+package de.felix.delta.check.alert;
+
+import de.felix.delta.check.Check;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+public class AlertBuilder {
+    public Player player;
+
+    private String alertMessage;
+
+    public Check check;
+
+    public AlertBuilder(final Check check) {
+        this.check = check;
+        this.player = check.getPlayer();
+    }
+
+    public AlertBuilder setAlertMessage(final String alertMessage) {
+        this.alertMessage = alertMessage;
+        return this;
+    }
+
+    public AlertBuilder runAlert(TagBuilder tagBuilder) {
+        if (alertMessage.isEmpty()) return this;
+
+        else if (player.isOp()) {
+            if (check.isPunishable())
+                punish();
+            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + tagBuilder.toString());
+        }
+        return this;
+    }
+
+    private void punish() {
+
+    }
+
+}
