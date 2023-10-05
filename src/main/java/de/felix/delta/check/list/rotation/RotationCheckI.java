@@ -32,11 +32,14 @@ public class RotationCheckI extends Check {
 
     private final double ACCURACY_THRESHOLD;
 
+    private final int MAX_COUNT;
+
     public ArrayList<Float> differences = new ArrayList<>();
 
     public RotationCheckI(DataHolder dataHolder) {
         super(dataHolder);
         ACCURACY_THRESHOLD = DeltaPlugin.getInstance().checkManager.getValueDouble(CheckType.ROTATION, "accuracy-threshold");
+        MAX_COUNT = DeltaPlugin.getInstance().checkManager.getValueInt(CheckType.ROTATION, "max-count");
     }
 
     @Override
@@ -69,7 +72,7 @@ public class RotationCheckI extends Check {
             Long lastPerfectHit = playerTimestamps.get(playerUUID);
             if (lastPerfectHit != null && System.currentTimeMillis() - lastPerfectHit < 10000) {
                 int count = playerPerfectRotations.getOrDefault(playerUUID, 0);
-                if (count > 3) {
+                if (count > MAX_COUNT) {
                     final AlertTagBuilder tagBuilder = new AlertTagBuilder();
                     tagBuilder.add("Count " + count);
                     tagBuilder.add("Difference " + difference);

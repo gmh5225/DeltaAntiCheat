@@ -42,7 +42,6 @@ public class CheckManager {
     }
 
     public double getValueDouble(CheckType check, String valueName) {
-        System.out.println(configuration.getConfigurationSection(check.name().toLowerCase()).getDouble(valueName) + " " + valueName);
         return configuration.getConfigurationSection(check.name().toLowerCase()).getDouble(valueName);
     }
 

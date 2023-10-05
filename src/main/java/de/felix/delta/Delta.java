@@ -15,7 +15,6 @@ public class Delta extends JavaPlugin {
         deltaPlugin = DeltaPlugin.getInstance();
         deltaPlugin.checkManager = new CheckManager(getConfig());
         deltaPlugin.dataManager = new DataManager();
-        MiscUtils.printToConsole(Color.Gray + "(" + Color.Pink + Color.Strikethrough + "DataManagerAutism Delta" + Color.Gray + ") " + Color.Green + "Initialized DataManager! " + deltaPlugin.dataManager);
         deltaPlugin.enable(this);
         super.onEnable();
     }

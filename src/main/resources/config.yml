@@ -4,3 +4,7 @@ rotation:
   # This is the accuracy, compared to the calculated rotations,
   #the higher the accuracy may be, the chance for legitimate flags is lower, but so is the effectiveness.
   accuracy-threshold: 0.4
+  # Is being used in the Rotation Check I,
+  # This is the count of the "perfect" rotations, higher count -> higher buffer less flags.
+  # Would not change this value, i think it's pretty good.
+  max-count: 3

@@ -36,7 +36,7 @@ public class DeltaPlugin {
 
     public void enable(Delta delta) {
         this.deltaInstance = delta;
-        MiscUtils.printToConsole(Color.Gray + "(" + Color.Green + antiCheat_name + Color.Gray + ") " + Color.Green + "Enabled!");
+        MiscUtils.printToConsole(Color.Gray + "(" + Color.Dark_Gray + antiCheat_name + Color.Gray + ") " + Color.Green + "Enabled!");
         this.deltaCommand = new DeltaCommand();
         delta.getCommand("Delta").setExecutor(this.deltaCommand);
         Atlas.getInstance().initializeScanner(delta.getClass(), delta);
@@ -47,7 +47,7 @@ public class DeltaPlugin {
     }
 
     public void disable(Delta delta) {
-        MiscUtils.printToConsole(Color.Gray + "(" + Color.Green + antiCheat_name + Color.Gray + ") " + Color.Red + "Disabled!");
+        MiscUtils.printToConsole(Color.Gray + "(" + Color.Dark_Gray + antiCheat_name + Color.Gray + ") " + Color.Red + "Disabled!");
         HandlerList.unregisterAll(delta);
         Bukkit.getScheduler().cancelTasks(delta);
     }
