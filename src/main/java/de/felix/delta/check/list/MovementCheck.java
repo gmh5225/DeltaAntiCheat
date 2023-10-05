@@ -19,8 +19,7 @@ public class MovementCheck extends Check {
     @Override
     public void handle(PlayerEvent packet) {
         if (packet instanceof PlayerMoveEvent) {
-            if (getDataHolder().enemyData.enemy == null) return;
-            Bukkit.broadcastMessage(getDataHolder().enemyData.enemy + "");
+            Bukkit.broadcastMessage(getDataHolder().rotationData.getRotation().deltaYaw + "");
         }
     }
 }

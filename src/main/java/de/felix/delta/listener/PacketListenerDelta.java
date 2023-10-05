@@ -12,6 +12,7 @@ import cc.funkemunky.api.tinyprotocol.packet.in.WrappedInUseEntityPacket;
 import cc.funkemunky.api.tinyprotocol.packet.in.WrappedInWindowClickPacket;
 import cc.funkemunky.api.tinyprotocol.packet.login.WrappedHandshakingInSetProtocol;
 import cc.funkemunky.api.tinyprotocol.packet.login.WrappedStatusInPing;
+import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutEntityHeadRotation;
 import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutEntityMetadata;
 import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutEntityTeleportPacket;
 import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutExplosionPacket;
@@ -19,7 +20,6 @@ import de.felix.delta.DeltaPlugin;
 import de.felix.delta.data.DataHolder;
 
 //Need to create an extra class without the implementation of the interface
-
 public class PacketListenerDelta implements AtlasListener {
 
     @Listen
@@ -56,6 +56,12 @@ public class PacketListenerDelta implements AtlasListener {
                         break;
                     }
 
+                    case Packet.Client.LOOK: {
+                        WrappedInFlyingPacket packet = new WrappedInFlyingPacket(listener.getPacket(), listener.getPlayer());
+
+                        break;
+                    }
+
                     case Packet.Client.POSITION: {
                         WrappedInFlyingPacket packet =  new WrappedInFlyingPacket(listener.getPacket(), listener.getPlayer());
                         dataHolder.enemyData.process();
@@ -87,6 +93,14 @@ public class PacketListenerDelta implements AtlasListener {
 
                         break;
                     }
+                    case Packet.Server.ENTITY_HEAD_ROTATION: {
+                        final WrappedOutEntityHeadRotation packet = new WrappedOutEntityHeadRotation(listener.getPacket(), listener.getPlayer());
+                        final DataHolder dataHolder = DeltaPlugin.getInstance().dataManager.getDataHolder(listener.getPlayer());
+                        if (dataHolder == null) return;
+                        dataHolder.rotationData.process(packet);
+                        break;
+                    }
+
                     case Packet.Server.KEEP_ALIVE: {
                         WrappedOutEntityTeleportPacket packet = new WrappedOutEntityTeleportPacket(listener.getPacket(),
                                 listener.getPlayer());

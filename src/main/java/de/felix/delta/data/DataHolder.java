@@ -5,10 +5,7 @@ import cc.funkemunky.api.tinyprotocol.api.ProtocolVersion;
 import cc.funkemunky.api.utils.BoundingBox;
 import cc.funkemunky.api.utils.world.types.SimpleCollisionBox;
 import de.felix.delta.check.Check;
-import de.felix.delta.data.datas.EnemyData;
-import de.felix.delta.data.datas.MovementData;
-import de.felix.delta.data.datas.TeleportData;
-import de.felix.delta.data.datas.WorldData;
+import de.felix.delta.data.datas.*;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -21,10 +18,9 @@ public class DataHolder {
     public final Set<Check> addedChecks = new HashSet<>();
     public MovementData movementData;
     public TeleportData teleportData;
-
     public EnemyData enemyData;
-
     public WorldData worldData;
+    public RotationData rotationData;
 
     public UUID uuid;
     public Player player;
@@ -43,6 +39,7 @@ public class DataHolder {
         this.movementData = new MovementData(uuid);
         this.worldData = new WorldData(uuid);
         this.enemyData = new EnemyData(uuid);
+        this.rotationData = new RotationData(uuid);
     }
 
     public Object getPlayerConnection() {
