@@ -1,23 +1,34 @@
 package de.felix.delta.data;
 
 import cc.funkemunky.api.reflections.impl.MinecraftReflection;
+import cc.funkemunky.api.tinyprotocol.api.ProtocolVersion;
+import cc.funkemunky.api.utils.BoundingBox;
+import cc.funkemunky.api.utils.world.types.SimpleCollisionBox;
 import de.felix.delta.check.Check;
 import de.felix.delta.data.datas.MovementData;
 import de.felix.delta.data.datas.TeleportData;
+import de.felix.delta.data.datas.WorldData;
+import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
 public class DataHolder {
     public final Set<Check> addedChecks = new HashSet<>();
     public MovementData movementData;
-
     public TeleportData teleportData;
+
+    public WorldData worldData;
 
     public UUID uuid;
     public Player player;
+
+    public SimpleCollisionBox box = new SimpleCollisionBox();
+
+    public ProtocolVersion playerVersion = ProtocolVersion.UNKNOWN;
 
     private Object playerConnection;
 
@@ -27,6 +38,7 @@ public class DataHolder {
         this.uuid = player.getUniqueId();
         this.teleportData = new TeleportData(uuid);
         this.movementData = new MovementData(uuid);
+        this.worldData = new WorldData(uuid);
     }
 
     public Object getPlayerConnection() {

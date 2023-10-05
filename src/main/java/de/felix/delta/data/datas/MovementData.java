@@ -2,10 +2,12 @@ package de.felix.delta.data.datas;
 
 import de.felix.delta.data.RegistrableDataHolder;
 import de.felix.delta.util.MovementStorage;
+import lombok.Getter;
 import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
+@Getter
 public class MovementData extends RegistrableDataHolder {
 
     public MovementStorage movementStorage = new MovementStorage();

@@ -19,7 +19,7 @@ public class MovementCheck extends Check {
     @Override
     public void handle(PlayerEvent packet) {
         if (packet instanceof PlayerMoveEvent) {
-            System.out.println("Async check for " + getDataHolder().player.getName() + " " + getDataHolder().movementData.movementStorage.getPointBehindTick(0, false).getY() + " " + getDataHolder().movementData.movementStorage.getCurrentPosition().getY());
+            System.out.println(getDataHolder().worldData.serverGround);
         }
     }
 }
