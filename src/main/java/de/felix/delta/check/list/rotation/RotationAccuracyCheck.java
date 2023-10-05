@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-@CheckInfo(checkName = "Rotation", checkType = CheckType.ROTATION, punishable = false)
-public class RotationCheckI extends Check {
+@CheckInfo(checkName = "RotationAccuracy", checkType = CheckType.ROTATION, punishable = false)
+public class RotationAccuracyCheck extends Check {
 
     private final HashMap<UUID, Integer> playerPerfectRotations = new HashMap<>();
 
@@ -34,7 +34,7 @@ public class RotationCheckI extends Check {
 
     public ArrayList<Float> differences = new ArrayList<>();
 
-    public RotationCheckI(DataHolder dataHolder) {
+    public RotationAccuracyCheck(DataHolder dataHolder) {
         super(dataHolder);
         ACCURACY_THRESHOLD = DeltaPlugin.getInstance().checkManager.getValueDouble(CheckType.ROTATION, "accuracy-threshold");
         MAX_COUNT = DeltaPlugin.getInstance().checkManager.getValueInt(CheckType.ROTATION, "max-count");
