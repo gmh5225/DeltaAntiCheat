@@ -4,12 +4,12 @@ import de.felix.delta.check.Check;
 import de.felix.delta.check.CheckInfo;
 import de.felix.delta.check.CheckType;
 import de.felix.delta.data.DataHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 @CheckInfo(checkName = "Movement", checkType = CheckType.MOVEMENT, punishable = false)
 public class MovementCheck extends Check {
-
     private long tickTime;
 
     public MovementCheck(DataHolder dataHolder) {
@@ -19,7 +19,8 @@ public class MovementCheck extends Check {
     @Override
     public void handle(PlayerEvent packet) {
         if (packet instanceof PlayerMoveEvent) {
-            System.out.println(getDataHolder().worldData.serverGround);
+            if (getDataHolder().enemyData.enemy == null) return;
+            Bukkit.broadcastMessage(getDataHolder().enemyData.enemy + "");
         }
     }
 }

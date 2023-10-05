@@ -12,7 +12,6 @@ import org.bukkit.util.Vector;
 
 public class DataListener implements Listener {
 
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMove(PlayerMoveEvent event) {
         final DataHolder dataHolder = DeltaPlugin.getInstance().dataManager.getDataHolder(event.getPlayer());
@@ -20,7 +19,7 @@ public class DataListener implements Listener {
         final Vector move = new Vector(event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
         dataHolder.movementData.process(move);
 
-        dataHolder.box = PlayerSizeHandler.instance.bounds(dataHolder.player.getPlayer(),event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
+        dataHolder.box = PlayerSizeHandler.instance.bounds(dataHolder.player.getPlayer(), event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
 
         dataHolder.worldData.runCollisionCheck();
 

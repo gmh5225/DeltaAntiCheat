@@ -14,6 +14,7 @@ public class MovementStorage {
     @Setter
     private Vector currentPosition, lastPosition;
 
+    @Getter
     private final List<PointWithTime> pointHistory = new ArrayList<>();
 
     public void addMovementPoint(Vector point) {

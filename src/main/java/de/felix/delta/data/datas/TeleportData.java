@@ -13,8 +13,6 @@ public class TeleportData extends RegistrableDataHolder {
 
     public Location lastTeleport;
     public long lastTeleportTime;
-
-
     public TeleportData(UUID holder) {
         super(holder);
     }

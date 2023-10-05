@@ -5,6 +5,7 @@ import cc.funkemunky.api.tinyprotocol.api.ProtocolVersion;
 import cc.funkemunky.api.utils.BoundingBox;
 import cc.funkemunky.api.utils.world.types.SimpleCollisionBox;
 import de.felix.delta.check.Check;
+import de.felix.delta.data.datas.EnemyData;
 import de.felix.delta.data.datas.MovementData;
 import de.felix.delta.data.datas.TeleportData;
 import de.felix.delta.data.datas.WorldData;
@@ -20,6 +21,8 @@ public class DataHolder {
     public final Set<Check> addedChecks = new HashSet<>();
     public MovementData movementData;
     public TeleportData teleportData;
+
+    public EnemyData enemyData;
 
     public WorldData worldData;
 
@@ -39,6 +42,7 @@ public class DataHolder {
         this.teleportData = new TeleportData(uuid);
         this.movementData = new MovementData(uuid);
         this.worldData = new WorldData(uuid);
+        this.enemyData = new EnemyData(uuid);
     }
 
     public Object getPlayerConnection() {
