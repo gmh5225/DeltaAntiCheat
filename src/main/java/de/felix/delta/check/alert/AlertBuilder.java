@@ -24,7 +24,7 @@ public class AlertBuilder {
     public AlertBuilder runAlert(AlertTagBuilder alertTagBuilder) {
         if (alertMessage.isEmpty()) return this;
 
-        else if (player.isOp()) {
+        else if (player.isOp() || player.hasPermission("delta.alerts")) {
             if (check.isPunishable())
                 punish();
             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Δ - delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + alertTagBuilder.toString());
