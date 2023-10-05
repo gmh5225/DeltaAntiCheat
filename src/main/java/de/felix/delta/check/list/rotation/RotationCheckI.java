@@ -18,13 +18,19 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 @CheckInfo(checkName = "Rotation", checkType = CheckType.ROTATION, punishable = false)
 public class RotationCheckI extends Check {
 
-    public ArrayList<Float> differences = new ArrayList<>();
+    private final HashMap<UUID, Integer> playerPerfectRotations = new HashMap<>();
 
-    private final BufferSystem bufferSystem = new BufferSystem(100);
+    private final HashMap<UUID, Long> playerTimestamps = new HashMap<>();
+
+    private static final float ACCURACY_THRESHOLD = .4f;
+
+    public ArrayList<Float> differences = new ArrayList<>();
 
     public RotationCheckI(DataHolder dataHolder) {
         super(dataHolder);
@@ -37,9 +43,6 @@ public class RotationCheckI extends Check {
             if (getDataHolder().enemyData.enemy == null)
                 differences.clear();
 
-
-            final AlertTagBuilder tagBuilder = new AlertTagBuilder();
-
             if (getDataHolder().enemyData.enemy == null) return;
 
             final Rotation targetRotation = getTargetRotations(getDataHolder().enemyData.enemy, getDataHolder());
@@ -48,26 +51,32 @@ public class RotationCheckI extends Check {
 
             final float yaw = MathHelper.wrapAngleTo180_float(getDataHolder().rotationData.getRotation().yaw);
 
-            final float difference = Math.abs(yaw - perfectRotation) * (getDataHolder().movementData.deltaXZ);
+            checkPerfectHit(getDataHolder(), perfectRotation, yaw);
+        }
+    }
 
-            differences.add(difference);
+    private void checkPerfectHit(DataHolder dataHolder, float perfectRotation, float yaw) {
+        final UUID playerUUID = dataHolder.getPlayer().getUniqueId();
+        final float difference = Math.abs(yaw - perfectRotation);
 
-            final float average = (float) differences.stream().mapToDouble(Float::doubleValue).average().orElse(0.0);
-
-            tagBuilder.add("Avg: " + average);
-
-            tagBuilder.add("Yaw: " + String.valueOf(yaw));
-
-            if (average < 2 && differences.size() > 20)
-                bufferSystem.increment(1);
-            else
-                bufferSystem.reward();
-
-            if (bufferSystem.isBuffered()) {
-                getAlertBuilder().setAlertMessage("Too high accuracy").runAlert(tagBuilder);
-                differences.clear();
+        if (difference <= ACCURACY_THRESHOLD) {
+            playerTimestamps.put(playerUUID, System.currentTimeMillis());
+            playerPerfectRotations.put(playerUUID, playerPerfectRotations.getOrDefault(playerUUID, 0) + 1);
+        } else {
+            Long lastPerfectHit = playerTimestamps.get(playerUUID);
+            if (lastPerfectHit != null && System.currentTimeMillis() - lastPerfectHit < 10000) {
+                int count = playerPerfectRotations.getOrDefault(playerUUID, 0);
+                if (count > 3) {
+                    final AlertTagBuilder tagBuilder = new AlertTagBuilder();
+                    tagBuilder.add("Count " + count);
+                    tagBuilder.add("Difference " + difference);
+                    tagBuilder.add("Yaw " + yaw);
+                    tagBuilder.add("Perfect " + perfectRotation);
+                    tagBuilder.add("Delta " + Math.abs(yaw - perfectRotation));
+                    getAlertBuilder().setAlertMessage("Too high accuracy").runAlert(tagBuilder);
+                    playerPerfectRotations.put(dataHolder.getPlayer().getUniqueId(), 0);
+                }
             }
-            System.out.println(average + " " + bufferSystem.getBuffer());
         }
     }
 
