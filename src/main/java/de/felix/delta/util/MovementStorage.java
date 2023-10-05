@@ -35,7 +35,7 @@ public class MovementStorage {
     }
 
     @Getter
-    private static class PointWithTime {
+    public static class PointWithTime {
         private final Vector point;
         private final long time;
 

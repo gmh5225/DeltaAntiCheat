@@ -42,7 +42,11 @@
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.Exlll.ConfigLib</groupId>
+            <artifactId>configlib-yaml</artifactId>
+            <version>v4.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.github.spigot</groupId>
             <artifactId>1.12.2</artifactId>

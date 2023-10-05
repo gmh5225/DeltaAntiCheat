@@ -9,7 +9,7 @@ public class EnemyData extends RegistrableDataHolder {
     private long lastAttackTime;
     public Entity enemy;
     public final MovementStorage movementStorage = new MovementStorage(); //Safes the lasts positions of the enemy
-    private static final long resetTime = 4000L; //4 seconds
+    private static final long resetTime = 300L; //Time in ms until the enemy is reset
 
     public EnemyData(UUID holder) {
         super(holder);
@@ -27,8 +27,9 @@ public class EnemyData extends RegistrableDataHolder {
             movementStorage.setLastPosition(null);
         }
         if (enemy == null) return;
-        movementStorage.setLastPosition(movementStorage.getCurrentPosition());
-        movementStorage.addMovementPoint(enemy.getLocation().toVector());
+
+      //  movementStorage.setLastPosition(movementStorage.getCurrentPosition());
+       // movementStorage.addMovementPoint(enemy.getLocation().toVector());
         if (lastAttackTime + resetTime < System.currentTimeMillis())
             enemy = null;
     }

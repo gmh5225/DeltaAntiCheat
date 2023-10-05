@@ -5,6 +5,8 @@ This check checks the accuracy of the player's rotation compared to the calculat
 package de.felix.delta.check.list.rotation;
 
 import cc.funkemunky.api.utils.MathHelper;
+import de.felix.delta.Delta;
+import de.felix.delta.DeltaPlugin;
 import de.felix.delta.check.Check;
 import de.felix.delta.check.CheckInfo;
 import de.felix.delta.check.CheckType;
@@ -28,12 +30,13 @@ public class RotationCheckI extends Check {
 
     private final HashMap<UUID, Long> playerTimestamps = new HashMap<>();
 
-    private static final float ACCURACY_THRESHOLD = .4f;
+    private final double ACCURACY_THRESHOLD;
 
     public ArrayList<Float> differences = new ArrayList<>();
 
     public RotationCheckI(DataHolder dataHolder) {
         super(dataHolder);
+        ACCURACY_THRESHOLD = DeltaPlugin.getInstance().checkManager.getValueDouble(CheckType.ROTATION, "accuracy-threshold");
     }
 
     @Override
