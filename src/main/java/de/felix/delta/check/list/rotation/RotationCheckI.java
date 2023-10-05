@@ -54,11 +54,11 @@ public class RotationCheckI extends Check {
 
             final float average = (float) differences.stream().mapToDouble(Float::doubleValue).average().orElse(0.0);
 
-            tagBuilder.add(String.valueOf(average));
+            tagBuilder.add("Avg: " + average);
 
-            tagBuilder.add(String.valueOf(yaw));
+            tagBuilder.add("Yaw: " + String.valueOf(yaw));
 
-            if (average < 5 && differences.size() > 20)
+            if (average < 2 && differences.size() > 20)
                 bufferSystem.increment(1);
             else
                 bufferSystem.reward();
