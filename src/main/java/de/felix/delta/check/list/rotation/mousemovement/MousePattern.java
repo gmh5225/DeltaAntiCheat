@@ -52,10 +52,6 @@ public class MousePattern extends Check {
 
             final double deltaSpeed = Math.abs(stats.maxSpeed - stats.minSpeed);
 
-            if (deltaSpeed >= 360) {
-                Bukkit.broadcastMessage(stats.maxAngle + "");
-            }
-
         }
     }
 }
