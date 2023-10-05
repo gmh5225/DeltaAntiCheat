@@ -12,7 +12,8 @@ public class RotationData extends RegistrableDataHolder {
     @Getter
     private Rotation rotation;
 
-    private float yaw, pitch, lYaw, lPitch, deltaYaw, deltaPitch;
+    @Getter
+    private float yaw, pitch, lYaw, lPitch, deltaYaw, deltaPitch, lastDeltaYaw, lastDeltaPitch;
 
     @Getter
     private double radianYaw, radianPitch, deltaRadiansYaw, deltaRadiansPitch;
@@ -24,6 +25,8 @@ public class RotationData extends RegistrableDataHolder {
     public void process(final WrappedOutEntityHeadRotation wrappedOutEntityHeadRotation) {
         this.lYaw = this.yaw;
         this.lPitch = this.pitch;
+        this.lastDeltaYaw = this.deltaYaw;
+        this.lastDeltaPitch = this.deltaPitch;
         this.yaw = wrappedOutEntityHeadRotation.getPlayer().getLocation().getYaw();
         this.pitch = wrappedOutEntityHeadRotation.getPlayer().getLocation().getPitch();
         this.deltaYaw = yaw - lYaw;

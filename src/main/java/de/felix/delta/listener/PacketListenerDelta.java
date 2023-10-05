@@ -18,6 +18,7 @@ import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutEntityTeleportPacket;
 import cc.funkemunky.api.tinyprotocol.packet.out.WrappedOutExplosionPacket;
 import de.felix.delta.DeltaPlugin;
 import de.felix.delta.data.DataHolder;
+import org.bukkit.Bukkit;
 
 //Need to create an extra class without the implementation of the interface
 public class PacketListenerDelta implements AtlasListener {
@@ -43,6 +44,9 @@ public class PacketListenerDelta implements AtlasListener {
 
                 final DataHolder dataHolder = DeltaPlugin.getInstance().dataManager.getDataHolder(listener.getPlayer());
                 if (dataHolder == null) return;
+
+                DeltaPlugin.getInstance().checkManager.getChecks(dataHolder).forEach(check -> check.handle(listener));
+
                 switch(listener.getType()) {
                     case Packet.Client.TRANSACTION: {
                         WrappedInTransactionPacket packet = new WrappedInTransactionPacket(listener.getPacket(), listener.getPlayer());
@@ -56,6 +60,11 @@ public class PacketListenerDelta implements AtlasListener {
                         break;
                     }
 
+                    case Packet.Client.FLYING: {
+                        dataHolder.enemyData.process();
+                        break;
+                    }
+
                     case Packet.Client.LOOK: {
                         WrappedInFlyingPacket packet = new WrappedInFlyingPacket(listener.getPacket(), listener.getPlayer());
 
@@ -63,8 +72,6 @@ public class PacketListenerDelta implements AtlasListener {
                     }
 
                     case Packet.Client.POSITION: {
-                        WrappedInFlyingPacket packet =  new WrappedInFlyingPacket(listener.getPacket(), listener.getPlayer());
-                        dataHolder.enemyData.process();
                         break;
                     }
 

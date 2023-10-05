@@ -49,6 +49,9 @@ public class DeltaPlugin {
     public void disable(Delta delta) {
         MiscUtils.printToConsole(Color.Gray + "(" + Color.Dark_Gray + antiCheat_name + Color.Gray + ") " + Color.Red + "Disabled!");
         HandlerList.unregisterAll(delta);
+        dataManager.shutdown();
+        checkManager.checks.clear();
+        packetListenerDelta = null;
         Bukkit.getScheduler().cancelTasks(delta);
     }
 

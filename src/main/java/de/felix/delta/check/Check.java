@@ -1,5 +1,7 @@
 package de.felix.delta.check;
 
+import cc.funkemunky.api.tinyprotocol.listener.PacketInfo;
+import cc.funkemunky.api.tinyprotocol.listener.functions.PacketListener;
 import de.felix.delta.check.alert.AlertBuilder;
 import de.felix.delta.data.DataHolder;
 import lombok.Getter;
@@ -31,6 +33,8 @@ public abstract class Check {
         this.player = dataHolder.player;
         this.alertBuilder = new AlertBuilder(this);
     }
+
+    public void handle(PacketInfo packetInfo) {}
 
     public abstract void handle(PlayerEvent packet);
 

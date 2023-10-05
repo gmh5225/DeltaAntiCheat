@@ -27,7 +27,7 @@ public class AlertBuilder {
         else if (player.isOp()) {
             if (check.isPunishable())
                 punish();
-            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + alertTagBuilder.toString());
+            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Δ - delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + alertTagBuilder.toString());
         }
         return this;
     }

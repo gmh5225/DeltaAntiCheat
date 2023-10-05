@@ -5,13 +5,11 @@ This check checks the accuracy of the player's rotation compared to the calculat
 package de.felix.delta.check.list.rotation;
 
 import cc.funkemunky.api.utils.MathHelper;
-import de.felix.delta.Delta;
 import de.felix.delta.DeltaPlugin;
 import de.felix.delta.check.Check;
 import de.felix.delta.check.CheckInfo;
 import de.felix.delta.check.CheckType;
 import de.felix.delta.check.alert.AlertTagBuilder;
-import de.felix.delta.check.alert.BufferSystem;
 import de.felix.delta.data.DataHolder;
 import de.felix.delta.util.Rotation;
 import org.bukkit.entity.Entity;
@@ -45,7 +43,6 @@ public class RotationCheckI extends Check {
     @Override
     public void handle(PlayerEvent packet) {
         if (packet instanceof PlayerMoveEvent) {
-
             if (getDataHolder().enemyData.enemy == null)
                 differences.clear();
 

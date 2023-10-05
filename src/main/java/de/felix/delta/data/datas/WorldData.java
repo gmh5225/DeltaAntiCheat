@@ -10,6 +10,7 @@ import de.felix.delta.DeltaPlugin;
 import de.felix.delta.data.DataHolder;
 import de.felix.delta.data.RegistrableDataHolder;
 import de.felix.delta.util.KauriMiscUtils;
+import lombok.Getter;
 import net.minecraft.server.v1_8_R3.MathHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -27,11 +28,16 @@ public class WorldData extends RegistrableDataHolder {
             pistonNear, fenceBelow, inScaffolding, inHoney, serverGround, nearGround, worldLoaded, lServerGround;
     public float currentFriction, fromFriction;
 
+    @Getter
+    private Location groundLocation;
 
     public final List<SimpleCollisionBox> aboveCollisions = Collections.synchronizedList(new ArrayList<>()),
             belowCollisions = Collections.synchronizedList(new ArrayList<>());
 
     public final List<Block> blocks = Collections.synchronizedList(new ArrayList<>());
+
+    public SimpleCollisionBox groundBox;
+
     private static final EnumMap<Material, XMaterial> matchMaterial = new EnumMap<>(Material.class);
 
     private final Material cobweb = XMaterial.COBWEB.parseMaterial(),
@@ -75,6 +81,8 @@ public class WorldData extends RegistrableDataHolder {
         calculateCollisionBoxes(dataHolder, verticalMovement, horizontalMovement);
 
         checkLiquid(dataHolder, waterBox, lavaBox);
+
+        this.groundLocation = getGroundLocation(dataHolder, dataHolder.box, dataHolder.player.getLocation().getBlock().getType());
 
         final SimpleCollisionBox normalBox = dataHolder.box.copy();
 
@@ -145,8 +153,7 @@ public class WorldData extends RegistrableDataHolder {
                                         }
                                     }
 
-                                    if (normalBox.copy().expand(0.1, 0, 0.1).offset(0, -1, 0)
-                                            .isCollided(blockBox)) {
+                                    if (normalBox.copy().expand(0.1, 0, 0.1).offset(0, -1, 0).isCollided(blockBox)) {
                                         synchronized (belowCollisions) {
                                             blockBox.downCast(belowCollisions);
                                         }
@@ -165,6 +172,8 @@ public class WorldData extends RegistrableDataHolder {
                                         final SimpleCollisionBox groundBox = normalBox.copy().offset(0, -.49, 0).expandMax(0, -1.2, 0);
 
                                         final XMaterial blockMaterial = getXMaterial(type);
+
+                                        this.groundBox = normalBox.copy().offset(0, -.49, 0).expandMax(0, -1.2, 0);
 
                                         if (normalBox.copy().expand(0.4, 0, 0.4).expandMin(0, -1, 0).isIntersected(blockBox))
                                             blocksBelow = true;
@@ -318,6 +327,21 @@ public class WorldData extends RegistrableDataHolder {
         floorCollisionBox(lavaBox);
     }
 
+    private Location getGroundLocation(DataHolder dataHolder, CollisionBox normalBox, Material type) {
+        CollisionBox playerBox = normalBox.copy();
+        double y = dataHolder.movementData.movementStorage.getCurrentPosition().getY();
+        while (y > 0) {
+            playerBox.offset(0, y, 0);
+            Location potentialGroundLocation = new Location(dataHolder.getPlayer().getWorld(), dataHolder.movementData.movementStorage.getCurrentPosition().getX(), y, dataHolder.movementData.movementStorage.getCurrentPosition().getZ());
+            Block potentialGroundBlock = potentialGroundLocation.getBlock();
+            CollisionBox blockBox = BlockData.getData(type).getBox(potentialGroundBlock, dataHolder.playerVersion);
+            if (blockBox.isCollided(playerBox)) {
+                return potentialGroundLocation;
+            }
+            y -= 1.0;
+        }
+        return null;
+    }
     private SimpleCollisionBox calculateCollisionBox(final DataHolder dataHolder, final double yOffset, final int startX, final int endX, final int startY, final int endY, final int startZ, final int endZ) {
         final SimpleCollisionBox box = dataHolder.getBox().copy();
         box.xMin = Location.locToBlock(box.xMin + startX);
