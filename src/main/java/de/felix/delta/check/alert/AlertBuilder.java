@@ -21,13 +21,13 @@ public class AlertBuilder {
         return this;
     }
 
-    public AlertBuilder runAlert(TagBuilder tagBuilder) {
+    public AlertBuilder runAlert(AlertTagBuilder alertTagBuilder) {
         if (alertMessage.isEmpty()) return this;
 
         else if (player.isOp()) {
             if (check.isPunishable())
                 punish();
-            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + tagBuilder.toString());
+            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.RED + "Delta" + ChatColor.GRAY + "] " + ChatColor.GRAY + alertMessage + " " + alertTagBuilder.toString());
         }
         return this;
     }

@@ -19,7 +19,7 @@ public class MovementCheck extends Check {
     @Override
     public void handle(PlayerEvent packet) {
         if (packet instanceof PlayerMoveEvent) {
-            Bukkit.broadcastMessage(getDataHolder().rotationData.getRotation().deltaYaw + "");
+
         }
     }
 }

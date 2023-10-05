@@ -14,6 +14,8 @@ public class RotationData extends RegistrableDataHolder {
 
     private float yaw, pitch, lYaw, lPitch, deltaYaw, deltaPitch;
 
+    @Getter
+    private double radianYaw, radianPitch, deltaRadiansYaw, deltaRadiansPitch;
 
     public RotationData(UUID holder) {
         super(holder);
@@ -27,5 +29,9 @@ public class RotationData extends RegistrableDataHolder {
         this.deltaYaw = yaw - lYaw;
         this.deltaPitch = pitch - lPitch;
         this.rotation = new Rotation(yaw, pitch, deltaYaw, deltaPitch);
+        this.radianYaw = Math.toRadians(yaw);
+        this.radianPitch = Math.toRadians(pitch);
+        this.deltaRadiansYaw = Math.toRadians(deltaYaw);
+        this.deltaRadiansPitch = Math.toRadians(deltaPitch);
     }
 }
